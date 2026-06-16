@@ -1,0 +1,37 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+<div>
+    <div class="container">
+
+        <div class="left">
+            <img id="logo" src="{% static 'images/logo.png' %}" alt="logo">
+            <p>See everyday moments from your close friends.</p>
+            <img src="https://static.cdninstagram.com/rsrc.php/yR/r/92ZsVHNkyvf.webp" alt="">
+        </div>
+        
+        <div class="right">
+            {% if messages %}
+            {% for message in messages %}
+                <p style="font-size: 15px; color: red;">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            <h3>Log in to Instagram</h3>
+
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="identifier" id="identifier" placeholder="Username or email address"><br>
+                <input type="password" name="password" id="password" placeholder="Password"><br>
+                <input type="submit" value="Log in"><br>
+            </form>
+            <button id="forgot">Forgotten password</button><br>
+            <a href="{% url 'register' %}" id="register">Create new account</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
