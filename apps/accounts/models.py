@@ -7,5 +7,6 @@ class User(AbstractUser):
     name = models.CharField(max_length=100)
     date_of_birth = models.DateField()
     otp = models.CharField(max_length=6, null=True, blank=True)
+    otp_expiry = models.DateTimeField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
 

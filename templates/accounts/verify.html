@@ -1,11 +1,26 @@
-{% extends 'accounts/base.html' %}
-{% load static %}
-{% block content %}
-<link rel="stylesheet" href="{% static 'css/verify.css' %}">
+{% extends 'accounts/base.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/verify.css' %}" />
 
-<div>
+<div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <p style="font-size: 15px; color: red;">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+
+    <h2>Enter the confirmation code</h2>
+    <p>To confirm your account, enter the 6-digit code that we've sent to {{user_email}}.</p>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{user_id}}">
+        <input type="number" name="code" placeholder="Confirmation code" required/><br />
+
+        <input type="submit" value="Continue">
+    </form>
+    <form action="" method="post"></form>
+    <a href="{% url 'login' %}" id="login">I didn't get the code</a>
+
 </div>
-
-
 
 {% endblock %}
