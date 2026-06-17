@@ -44,3 +44,66 @@ input[type='submit']{
 #login:hover {
     background-color: #80808040;
 }
+
+
+.post-box{
+    position: absolute;
+    top: 0%;
+    left: 25%;
+    width: 34em;
+    height: 100%;
+
+}
+
+.post-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.left{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 0 10px;
+}
+
+.right{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 0 10px;
+    margin-right: 10px;
+}
+
+.follow{
+    background-color: #F0F2F5;
+    font-weight: bold;
+    font: 15px;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    padding: 0 10px;
+}
+
+.follow:hover{
+    background-color: #aaafb654;
+    cursor: pointer;
+}
+
+menu{
+    display: none;
+}
+
+.menu-icon{
+    cursor: pointer;
+}
+
+.post-img{
+    width: 34em;
+    max-height: 38em;
+}

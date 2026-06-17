@@ -1,6 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<div class="post-box">
+    {% for post in posts %}
+    <div class="post-bar">
+        <div class="left">
+            <img style="height: 30px; width: 30px; border: none; border-radius: 25px;"
+                src="{{post.post.user.profile_pic.url}}"
+                alt="Profile">
+            <p>{{post.post.user.username}}</p>
+            <i class="fa-solid fa-certificate" style="color: rgb(29, 132, 212);"></i>
+            <i class="fa-solid fa-circle" style="height: 5px; width: 5px;"></i>
+            <p>4h</p>
+        </div>
+        <div class="right">
+            <button class="follow">Follow</button>
+            <p class="menu-icon">
+                ...
+            </p>
+        </div>
+    </div>
+    <img class="post-img" src="{{post.file.url}}" alt="">
+    {% endfor %}
+</div>
 
 
+
+
+<menu>
+    <ul>
+        <li><a href="">dsfs</a></li>
+        <li><a href="">aaaa</a></li>
+        <li><a href="">qwqw</a></li>
+        <li><a href="">1211</a></li>
+        <li><a href="">dfs23</a></li>
+    </ul>
+</menu>
 
 {% endblock %}
