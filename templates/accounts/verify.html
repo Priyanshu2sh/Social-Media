@@ -9,11 +9,11 @@
     {% endif %}
 
     <h2>Enter the confirmation code</h2>
-    <p>To confirm your account, enter the 6-digit code that we've sent to {{user_email}}.</p>
+    <p>To confirm your account, enter the 6-digit code that we've sent to your given email.</p>
     
-    <form action="" method="post">
+    <form action="{% url 'verify' id %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="id" value="{{user_id}}">
+        <input type="hidden" name="id" value="{{id}}">
         <input type="number" name="code" placeholder="Confirmation code" required/><br />
 
         <input type="submit" value="Continue">

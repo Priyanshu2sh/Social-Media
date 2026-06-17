@@ -15,7 +15,11 @@
         <div class="right">
             {% if messages %}
             {% for message in messages %}
+                {% if message.tags == 'error' %}
                 <p style="font-size: 15px; color: red;">{{message}}</p>
+                {% else %}
+                <p style="font-size: 15px; color: green;">{{message}}</p>
+                {% endif %}
             {% endfor %}
             {% endif %}
             <h3>Log in to Instagram</h3>
@@ -26,7 +30,7 @@
                 <input type="password" name="password" id="password" placeholder="Password"><br>
                 <input type="submit" value="Log in"><br>
             </form>
-            <button id="forgot">Forgotten password</button><br>
+            <button onclick="location.href = {% url 'forgot_password' %};" id="forgot">Forgotten password?</button><br>
             <a href="{% url 'register' %}" id="register">Create new account</a>
         </div>
     </div>

@@ -14,3 +14,5 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT'),
     }
 }
+
+MSG91_AUTH_KEY=os.environ.get('MSG91_AUTH_KEY')
