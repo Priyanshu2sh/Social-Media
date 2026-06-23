@@ -2,17 +2,16 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
-<div class="post-box">
-    {% for post in posts %}
+<div class="post-box" id="post-box">
+    {% for post in page_obj %}
     <div class="post-bar">
         <div class="left">
             <img style="height: 30px; width: 30px; border: none; border-radius: 25px;"
-                src="{{post.post.user.profile_pic.url}}"
-                alt="Profile">
+                src="{{post.post.user.profile_pic.url}}" alt="Profile">
             <p>{{post.post.user.username}}</p>
             <i class="fa-solid fa-certificate" style="color: rgb(29, 132, 212);"></i>
             <i class="fa-solid fa-circle" style="height: 5px; width: 5px;"></i>
-            <p>4h</p>
+            <p>{{post.instagram_time}}</p>
         </div>
         <div class="right">
             <button class="follow">Follow</button>
@@ -37,5 +36,57 @@
         <li><a href="">dfs23</a></li>
     </ul>
 </menu>
+
+<input type="hidden" value="{{page_obj.has_next}}" id="has_next"></input>
+<input type="hidden" value="{{page_obj.next_page_number}}" id="next_page_num"></input>
+
+<script>
+    next = document.getElementById('has_next')
+    next_page_num = document.getElementById('next_page_num')
+
+    async function getPosts(page_num) {
+        const response = await fetch(`http://127.0.0.1:8000/home?page=${page_num}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        });
+        const posts = await response.json();
+        return posts;
+    }
+
+    $(window).scroll(async function () {
+        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+            console.log(next.value)
+            if (next.value && next_page_num.value) {
+                const data = await getPosts(next_page_num.value);
+                postBox = document.getElementById('post-box')
+
+                data.posts.forEach(post => {
+                    postBox.innerHTML += `
+                            <div class="post-bar">
+                                <div class="left">
+                                    <img style="height: 30px; width: 30px; border: none; border-radius: 25px;" src="${post.profile_pic}" alt="Profile">
+                                    <p>${post.username}</p>
+                                    <i class="fa-solid fa-certificate" style="color: rgb(29, 132, 212);"></i>
+                                    <i class="fa-solid fa-circle" style="height: 5px; width: 5px;"></i>
+                                    <p>${post.instagram_time}</p>
+                                </div>
+                                <div class="right">
+                                    <button class="follow">Follow</button>
+                                    <p class="menu-icon">...</p>
+                                </div>
+                            </div>
+                            <img class="post-img" src="${post.file_url}" alt="">
+                        `;
+                });
+
+                // Update tracker attributes for the subsequent page
+                next.value = (data.has_next ? 'true' : 'false');
+                next_page_num.value = data.next_page_number;
+            }
+        }
+    });
+</script>
 
 {% endblock %}
