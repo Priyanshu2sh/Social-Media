@@ -15,31 +15,53 @@
         </div>
         <div class="right">
             <button class="follow">Follow</button>
-            <p class="menu-icon">
+            <p class="menu-icon" onclick="showMenu()">
                 ...
             </p>
         </div>
     </div>
     <img class="post-img" src="{{post.file.url}}" alt="">
+    <div class="post-bar" style="margin-top: 0;">
+        <div class="left">
+            <i class="fa-regular fa-heart"></i>
+            <p>28.9K</p>
+            <i class="fa-regular fa-comment"></i>
+            <p>28K</p>
+            <i class="fa-regular fa-paper-plane"></i>
+        </div>
+        <div class="right">
+            <i class="fa-regular fa-bookmark"></i>
+        </div>
+    </div>
     {% endfor %}
+</div>
+
+<div class="profile-section">
+    <div>
+        <img style="height: 30px; width: 30px; border: none; border-radius: 25px;" src="{{user.profile_pic.url}}"
+            alt="Profile">
+        <p>{{user.username}}</p>
+    </div>
+    <p style="position: relative; left: 70%; left: 77.8em; bottom: 29px; font-size: 14px; color: grey;">{{user.name}}</p>
 </div>
 
 
 
-
-<menu>
+<menu id="menu">
     <ul>
-        <li><a href="">dsfs</a></li>
-        <li><a href="">aaaa</a></li>
-        <li><a href="">qwqw</a></li>
-        <li><a href="">1211</a></li>
-        <li><a href="">dfs23</a></li>
+        <li><a href="" style="color: red;">Report</a><br></li>
+        <li><a href="">About this account</a><br></li>
+        <li><a href="">Got to post</a><br></li>
+        <li><a href="">Share to...</a><br></li>
+        <li><a href="">Copy Link</a><br></li>
+        <li><a href="">Embed</a><br></li>
     </ul>
 </menu>
 
+
+
 <input type="hidden" value="{{page_obj.has_next}}" id="has_next"></input>
 <input type="hidden" value="{{page_obj.next_page_number}}" id="next_page_num"></input>
-
 <script>
     next = document.getElementById('has_next')
     next_page_num = document.getElementById('next_page_num')
@@ -87,6 +109,25 @@
             }
         }
     });
+</script>
+<!-- <i class="fa-solid fa-heart" style="color: rgb(246, 0, 56);"></i> -->
+
+<script>
+    menu = document.getElementById('menu')
+    function showMenu() {
+        if (menu.style.display == 'block'){
+            menu.style.display = 'none';
+        }
+        else{
+            menu.style.display = 'block';
+            menu.style.position = 'relative';
+            menu.style.left = '56em';
+            menu.style.backgroundColor = '#F9FAFA';
+            menu.style.maxWidth = 'fit-content';
+            menu.style.padding = '20px';
+            menu.style.borderRadius = '15px';
+        }
+    }
 </script>
 
 {% endblock %}

@@ -6,7 +6,7 @@ from django.utils import timezone
 
 # Create your views here.
 def home(request):
-    posts = PostFiles.objects.select_related('post')
+    posts = PostFiles.objects.select_related('post').order_by('-post__created_at')
     paginator = Paginator(posts, 3)
     page = request.GET.get('page')
     page_obj = paginator.get_page(page)
@@ -55,5 +55,5 @@ def home(request):
         })
 
     # Return standard HTML for regular page loads
-    context = {'page_obj': page_obj}
+    context = {'page_obj': page_obj, 'user': request.user}
     return render(request, 'home.html', context)

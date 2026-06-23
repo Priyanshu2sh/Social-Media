@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social</title>
     <script src="https://kit.fontawesome.com/f19ea20860.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
-        *{
+        * {
             font-family: "Source Sans Pro", "Arial", sans-serif;
         }
 
-        nav{
+        nav {
             display: flex;
             flex-direction: column;
             font-size: 20px;
             align-items: left;
-            
+
         }
 
-        nav div{
+        nav div {
             max-width: fit-content;
             margin-bottom: 10px;
             padding: 10px;
@@ -26,62 +28,183 @@
             border-radius: 5px;
         }
 
-        nav div:hover{
+        nav div:hover {
             background-color: #F0F2F5;
         }
-        
-        a{
+
+        a {
             text-decoration: none;
             color: black;
         }
 
-        .sidebar{
+        .sidebar {
             position: fixed;
+        }
+
+        /* Dark background */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .65);
+            z-index: 999;
+        }
+
+        /* Modal */
+        .create-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 540px;
+            height: 580px;
+
+            background: #fff;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .modal-header {
+            height: 60px;
+            border-bottom: 1px solid #dbdbdb;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Body */
+        .modal-body {
+            height: calc(100% - 60px);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .upload-icon {
+            font-size: 90px;
+            color: #262626;
+        }
+
+        .modal-body p {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .modal-body button {
+            background: #4f5fff;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-body button:hover {
+            opacity: .9;
         }
     </style>
 </head>
+
 <body>
-    
+
     <div class="sidebar">
         <nav>
             <i class="fa fa-instagram" aria-hidden="true" style="margin-bottom: 10px;"></i>
             <div>
                 <i class="fa-regular fa-house"></i>
-                <a href="">Home</a>
+                <a href="{% url 'home' %}">Home</a>
             </div>
             <div>
                 <i class="fa-regular fa-circle-play"></i>
-                <a href="">Reels</a>
+                <a href="#">Reels</a>
             </div>
             <div>
                 <i class="fa-regular fa-paper-plane"></i>
-                <a href="">Messages</a>
+                <a href="#">Messages</a>
             </div>
             <div>
                 <i class="fa fa-search" aria-hidden="true"></i>
-                <a href="">Search</a>
+                <a href="#">Search</a>
             </div>
             <div>
                 <i class="fa-regular fa-heart"></i>
-                <a href="">Notifications</a>
+                <a href="#">Notifications</a>
             </div>
             <div>
                 <i class="fa-regular fa-square-plus"></i>
-                <a href="">Create</a>
+                <a href="#" onclick="showCreateModal()">Create</a>
             </div>
             <div>
                 <i class="fa-regular fa-circle-user"></i>
-                <a href="">Profile</a>
+                <a href="#">Profile</a>
             </div>
             <div>
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
-                <a href="">Logout</a>
+                <a href="#">Logout</a>
             </div>
         </nav>
     </div>
-
-
     {% block content %}
     {% endblock %}
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="create-modal" id="create-modal">
+
+            <div class="modal-header">
+                <h3>Create new post</h3>
+            </div>
+
+            <div class="modal-body">
+                <i class="fa-regular fa-images upload-icon"></i>
+
+                <p>Drag photos and videos here</p>
+
+                <input type="file" id="file" hidden>
+
+                <button onclick="document.getElementById('file').click()">
+                    Select From Computer
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        const modal = document.getElementById('modal-overlay');
+
+        function showCreateModal() {
+            modal.style.display = 'block';
+        }
+
+        function hideCreateModal() {
+            modal.style.display = 'none';
+        }
+
+        // close when clicking outside
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                hideCreateModal();
+            }
+        });
+    </script>
+
+
 </body>
+
+
 </html>

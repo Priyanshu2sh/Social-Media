@@ -107,3 +107,20 @@ menu{
     width: 34em;
     max-height: 38em;
 }
+
+.profile-section div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0 10px;
+    position: relative;
+    left: 70%;
+    max-width: fit-content;
+    
+}
+
+#menu{
+    position: relative;
+    left: 12em;
+}
