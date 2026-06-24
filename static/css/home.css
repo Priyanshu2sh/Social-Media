@@ -124,3 +124,33 @@ menu{
     position: relative;
     left: 12em;
 }
+
+.comment-section{
+    font-size: 12px;
+    margin-top: -3px;
+    margin-left: 5px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.username{
+    font-weight: 600;
+}
+
+.caption-text{
+    display: inline;
+}
+
+.caption-text.collapsed{
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* show 2 lines initially */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.more-btn{
+    color: gray;
+    cursor: pointer;
+    font-weight: 500;
+    display: none;
+}

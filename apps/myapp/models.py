@@ -4,6 +4,8 @@ from apps.accounts.models import User
 # Create your models here.
 class Posts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    caption = models.TextField(null=True, blank=True)
+    location = models.CharField(max_length=100, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

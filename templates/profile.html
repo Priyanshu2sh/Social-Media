@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+
+<div class="profile-container">
+
+    <div class="profile-header">
+        <img src="{{user.profile_pic.url}}" alt="" style="width: 10em; height: 10em; border-radius: 50%;"   >
+
+        <div class="profile-info">
+            <div class="username-row">
+                <h1>{{user.username}}</h1>
+                <button class="settings-btn">
+                    <i class="fa-solid fa-gear" onclick="showSettings()"></i>
+                </button>
+            </div>
+
+            <div class="full-name">
+                {{user.name}}
+            </div>
+
+            <div class="stats">
+                <span><strong>{{posts_count}}</strong> post</span>
+                <span><strong>0</strong> followers</span>
+                <span><strong>0</strong> following</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-actions">
+        <button>Edit Profile</button>
+        <button>View archive</button>
+    </div>
+
+</div>
+
+<menu id="settings-menu">
+    <ul>
+        <li>Apps and websites</li>
+        <li>QR code</li>
+        <li>Notifications</li>
+        <li>Settings and privacy</li>
+        <li>Meta Verified</li>
+        <li>Supervision</li>
+        <li>Login activity</li>
+        <li>Log out</li>
+    </ul>
+</menu>
+
+<script>
+    settingsMenu = document.getElementById('settings-menu')
+    function showSettings(){
+        if (settingsMenu.style.display == 'none'){
+            settingsMenu.style.display = 'block';
+        }
+        else{
+            settingsMenu.style.display = 'none';
+        }
+    }
+</script>
+
+
+{% endblock %}

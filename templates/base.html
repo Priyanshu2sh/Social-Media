@@ -41,50 +41,42 @@
             position: fixed;
         }
 
-        /* Dark background */
         .modal-overlay {
-            display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, .65);
+            background: rgba(0, 0, 0, .6);
+            display: none;
             z-index: 999;
         }
 
-        /* Modal */
+        /* STEP 1 */
+
         .create-modal {
+            width: 550px;
+            height: 650px;
+            background: white;
+
             position: absolute;
-            top: 50%;
             left: 50%;
+            top: 50%;
             transform: translate(-50%, -50%);
 
-            width: 540px;
-            height: 580px;
-
-            background: #fff;
-            border-radius: 25px;
+            border-radius: 15px;
             overflow: hidden;
         }
 
-        /* Header */
         .modal-header {
-            height: 60px;
-            border-bottom: 1px solid #dbdbdb;
-
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            padding: 15px;
             display: flex;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .modal-header h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        /* Body */
-        .modal-body {
-            height: calc(100% - 60px);
-
+        .upload-content {
+            height: 90%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -92,29 +84,192 @@
             gap: 20px;
         }
 
-        .upload-icon {
-            font-size: 90px;
-            color: #262626;
-        }
-
-        .modal-body p {
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .modal-body button {
-            background: #4f5fff;
+        .upload-content button {
+            background: #4c68ff;
             color: white;
             border: none;
-            padding: 10px 22px;
+            padding: 12px 20px;
             border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
             cursor: pointer;
         }
 
-        .modal-body button:hover {
-            opacity: .9;
+        /* STEP 2 */
+
+        .preview-modal {
+            display: none;
+
+            width: 900px;
+            height: 600px;
+
+            background: white;
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .preview-header {
+            height: 60px;
+            border-bottom: 1px solid #ddd;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 15px;
+        }
+
+        .preview-header h3 {
+            margin: 0;
+        }
+
+        .share-btn {
+            border: none;
+            background: none;
+            color: #0095f6;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .preview-body {
+            display: flex;
+            height: calc(100% - 60px);
+        }
+
+        /* LEFT SIDE */
+
+        .image-section {
+            width: 60%;
+            background: black;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            width: 35px;
+            height: 35px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: white;
+            cursor: pointer;
+        }
+
+        .left {
+            left: 10px;
+        }
+
+        .right {
+            right: 10px;
+        }
+
+        /* RIGHT SIDE */
+
+        .form-section {
+            width: 40%;
+            border-left: 1px solid #ddd;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+
+            resize: none;
+
+            border: none;
+            outline: none;
+
+            font-size: 15px;
+        }
+
+        input[type=text] {
+            margin-top: 20px;
+
+            padding: 12px;
+
+            border: none;
+            border-top: 1px solid #ddd;
+            outline: none;
+        }
+
+        .loader-screen,
+        .success-screen {
+            display: none;
+            height: calc(100% - 60px);
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+
+            border: 5px solid #ddd;
+            border-top: 5px solid #0095f6;
+
+            border-radius: 50%;
+
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .success-icon {
+            width: 90px;
+            height: 90px;
+
+            border-radius: 50%;
+            border: 4px solid #ff0080;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 50px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -150,7 +305,7 @@
             </div>
             <div>
                 <i class="fa-regular fa-circle-user"></i>
-                <a href="#">Profile</a>
+                <a href="{% url 'profile' %}">Profile</a>
             </div>
             <div>
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -161,46 +316,263 @@
     {% block content %}
     {% endblock %}
 
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="create-modal" id="create-modal">
+    <div class="modal-overlay" id="modalOverlay">
+
+        <div class="create-modal" id="uploadModal">
 
             <div class="modal-header">
-                <h3>Create new post</h3>
+                <h3 id="modalTitle">Create new post</h3>
+                <i style="cursor: pointer;" class="fa-solid fa-x" onclick="closeModal()"></i>
             </div>
 
-            <div class="modal-body">
+
+            <div class="upload-content">
                 <i class="fa-regular fa-images upload-icon"></i>
 
-                <p>Drag photos and videos here</p>
+                <h2>Drag photos and videos here</h2>
 
-                <input type="file" id="file" hidden>
+                <input type="file" id="fileInput" multiple hidden>
 
-                <button onclick="document.getElementById('file').click()">
+                <button onclick="document.getElementById('fileInput').click()">
                     Select From Computer
                 </button>
             </div>
 
         </div>
+
+        <div class="preview-modal" id="previewModal">
+
+            <div class="preview-header">
+                <i class="fa-solid fa-arrow-left" id="backBtn" onclick="goBack()"></i>
+
+                <h3>Create new post</h3>
+
+                <button class="share-btn" id="shareBtn">
+                    Share
+                </button>
+            </div>
+
+            <div class="preview-body" id="previewContent">
+
+                <div class="image-section">
+
+                    <button class="nav-btn left" onclick="prevImage()">
+                        ❮
+                    </button>
+
+                    <img id="previewImage">
+
+                    <button class="nav-btn right" onclick="nextImage()">
+                        ❯
+                    </button>
+
+                </div>
+
+                <div class="form-section">
+
+                    <div class="user-info">
+                        <img style="height: 30px; width: 30px; border: none; border-radius: 25px;"
+                            src="{{user.profile_pic.url}}" alt="Profile">
+                        <strong>{{user.username}}</strong>
+                    </div>
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <textarea id="caption" placeholder="Write a caption..."></textarea>
+    
+                        <input type="text" id="location" placeholder="Add location">
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="loader-screen" id="loaderScreen">
+                <div class="spinner"></div>
+                <p>Sharing post...</p>
+            </div>
+
+            <div class="success-screen" id="successScreen">
+                <div class="success-icon">✓</div>
+                <h2>Your post has been shared.</h2>
+            </div>
+
+        </div>
+
     </div>
 
 
     <script>
-        const modal = document.getElementById('modal-overlay');
+        const fileInput = document.getElementById("fileInput");
+
+        const uploadModal = document.getElementById("uploadModal");
+        const previewModal = document.getElementById("previewModal");
+
+        const previewImage = document.getElementById("previewImage");
+
+        let selectedImages = [];
+        let currentIndex = 0;
+
+        function closeModal() {
+            console.log('aaaa')
+            uploadModal.style.display = "none";
+            document.getElementById("modalOverlay").style.display = "none";
+        }
 
         function showCreateModal() {
-            modal.style.display = 'block';
+            document.getElementById("modalOverlay").style.display = "block";
+            uploadModal.style.display = "block";
+            previewModal.style.display = "none";
         }
 
-        function hideCreateModal() {
-            modal.style.display = 'none';
-        }
+        fileInput.addEventListener("change", function () {
 
-        // close when clicking outside
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) {
-                hideCreateModal();
+            selectedImages = [];
+
+            [...this.files].forEach(file => {
+                selectedImages.push(URL.createObjectURL(file));
+            });
+
+            if (selectedImages.length) {
+
+                currentIndex = 0;
+
+                previewImage.src = selectedImages[0];
+
+                uploadModal.style.display = "none";
+                previewModal.style.display = "block";
             }
         });
+
+        function nextImage() {
+
+            if (selectedImages.length <= 1) return;
+
+            currentIndex++;
+
+            if (currentIndex >= selectedImages.length) {
+                currentIndex = 0;
+            }
+
+            previewImage.src = selectedImages[currentIndex];
+        }
+
+        function prevImage() {
+
+            if (selectedImages.length <= 1) return;
+
+            currentIndex--;
+
+            if (currentIndex < 0) {
+                currentIndex = selectedImages.length - 1;
+            }
+
+            previewImage.src = selectedImages[currentIndex];
+        }
+
+        function goBack() {
+
+            previewModal.style.display = "none";
+            uploadModal.style.display = "block";
+
+            fileInput.value = "";
+        }
+
+        document.getElementById("shareBtn").addEventListener("click", sharePost);
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        async function sharePost() {
+
+            const files = document.getElementById("fileInput").files;
+
+            const caption =
+                document.getElementById("caption").value;
+
+            const location =
+                document.getElementById("location").value;
+
+            const formData = new FormData();
+
+            formData.append("caption", caption);
+            formData.append("location", location);
+
+            for (let i = 0; i < files.length; i++) {
+                formData.append("images", files[i]);
+            }
+
+            // Hide preview
+            document.getElementById("previewContent").style.display = "none";
+
+            // Show loader
+            document.getElementById("loaderScreen").style.display = "flex";
+
+            document.getElementById("modalTitle").innerText = "Sharing";
+            document.getElementById("shareBtn").style.display = "none";
+            document.getElementById("backBtn").style.display = "none";
+
+            try {
+
+                const response = await fetch("/home/create/post/", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": getCookie("csrftoken"),
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Upload failed");
+                }
+
+                // Loader -> Success
+                document.getElementById("loaderScreen").style.display = "none";
+                document.getElementById("successScreen").style.display = "flex";
+
+                document.getElementById("modalTitle").innerText = "Post shared";
+
+                const shareBtn = document.getElementById("shareBtn");
+
+                shareBtn.innerText = "Done";
+                shareBtn.style.display = "block";
+
+                shareBtn.onclick = function () {
+
+                    document.getElementById("modalOverlay").style.display = "none";
+
+                    // reset
+                    document.getElementById("successScreen").style.display = "none";
+                    document.getElementById("previewContent").style.display = "flex";
+
+                    document.getElementById("modalTitle").innerText = "Create new post";
+
+                    shareBtn.innerText = "Share";
+                    shareBtn.style.display = "block";
+                    
+                    document.getElementById("backBtn").style.display = "block";
+                    
+                    window.location.reload();
+
+                };
+
+            }
+            catch (error) {
+
+                document.getElementById("loaderScreen").style.display = "none";
+                document.getElementById("previewContent").style.display = "flex";
+
+                document.getElementById("shareBtn").style.display = "block";
+                document.getElementById("backBtn").style.display = "block";
+
+                document.getElementById("modalTitle").innerText = "Create new post";
+
+                alert(error.message);
+            }
+        }
     </script>
 
 

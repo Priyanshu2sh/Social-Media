@@ -33,6 +33,18 @@
             <i class="fa-regular fa-bookmark"></i>
         </div>
     </div>
+    <div class="comment-section">
+        <span class="username">
+            {{user.username}}
+            <i class="fa-solid fa-certificate" style="color: rgb(29, 132, 212);"></i>
+        </span>
+
+        <span class="caption-text">
+            {{post.post.caption}}
+        </span>
+
+        <span class="more-btn">more</span>
+    </div>
     {% endfor %}
 </div>
 
@@ -42,7 +54,8 @@
             alt="Profile">
         <p>{{user.username}}</p>
     </div>
-    <p style="position: relative; left: 70%; left: 77.8em; bottom: 29px; font-size: 14px; color: grey;">{{user.name}}</p>
+    <p style="position: relative; left: 70%; left: 77.8em; bottom: 29px; font-size: 14px; color: grey;">{{user.name}}
+    </p>
 </div>
 
 
@@ -100,6 +113,30 @@
                                 </div>
                             </div>
                             <img class="post-img" src="${post.file_url}" alt="">
+                            <div class="post-bar" style="margin-top: 0;">
+                            <div class="left">
+                                <i class="fa-regular fa-heart"></i>
+                                <p>28.9K</p>
+                                <i class="fa-regular fa-comment"></i>
+                                <p>28K</p>
+                                <i class="fa-regular fa-paper-plane"></i>
+                            </div>
+                            <div class="right">
+                                <i class="fa-regular fa-bookmark"></i>
+                            </div>
+                        </div>
+                        <div class="comment-section">
+                            <span class="username">
+                                ${post.username}
+                                <i class="fa-solid fa-certificate" style="color: rgb(29, 132, 212);"></i>
+                            </span>
+
+                            <span class="caption-text">
+                                ${post.caption}
+                            </span>
+
+                            <span class="more-btn">more</span>
+                        </div>
                         `;
                 });
 
@@ -115,10 +152,10 @@
 <script>
     menu = document.getElementById('menu')
     function showMenu() {
-        if (menu.style.display == 'block'){
+        if (menu.style.display == 'block') {
             menu.style.display = 'none';
         }
-        else{
+        else {
             menu.style.display = 'block';
             menu.style.position = 'relative';
             menu.style.left = '56em';
@@ -128,6 +165,25 @@
             menu.style.borderRadius = '15px';
         }
     }
+
+    document.querySelectorAll('.comment-section').forEach(section => {
+        const text = section.querySelector('.caption-text');
+        const moreBtn = section.querySelector('.more-btn');
+
+        text.classList.add('collapsed');
+
+        // Check if text exceeds 2 lines
+        setTimeout(() => {
+            if (text.scrollHeight > text.clientHeight) {
+                moreBtn.style.display = 'inline';
+            }
+        }, 0);
+
+        moreBtn.addEventListener('click', () => {
+            text.classList.remove('collapsed');
+            moreBtn.style.display = 'none';
+        });
+    });
 </script>
 
 {% endblock %}

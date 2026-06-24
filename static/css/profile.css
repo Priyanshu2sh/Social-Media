@@ -1,0 +1,133 @@
+.profile-container{
+    max-width:720px;
+    margin:auto;
+}
+
+.profile-header{
+    display:flex;
+    align-items:flex-start;
+    gap:28px;
+}
+
+.profile-image{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:#7d7d7d;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.profile-image::before{
+    content:"";
+    position:absolute;
+    width:95px;
+    height:95px;
+    border-radius:50%;
+    background:#666;
+    top:30px;
+}
+
+.profile-image::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:60px;
+    border-radius:60px 60px 0 0;
+    background:#666;
+    bottom:0;
+}
+
+.profile-image i{
+    position:relative;
+    z-index:2;
+    font-size:40px;
+    color:#fff;
+    background:rgba(255,255,255,.15);
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.profile-info{
+    margin-top:18px;
+}
+
+.username-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.username-row h1{
+    font-size:22px;
+    font-weight:700;
+}
+
+.settings-btn{
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.full-name{
+    font-size:20px;
+    margin-bottom:18px;
+}
+
+.stats{
+    display:flex;
+    gap:24px;
+    font-size:16px;
+}
+
+.stats strong{
+    font-weight:700;
+}
+
+.profile-actions{
+    margin-top:24px;
+    display:flex;
+    gap:10px;
+}
+
+.profile-actions button{
+    flex:1;
+    border:none;
+    background:#efefef;
+    padding:10px;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.profile-actions button:hover{
+    background:#e4e4e4;
+}
+
+#settings-menu{
+    display: none;
+    position: relative;
+    bottom: 11em;
+    left: 51em;
+    background: #F9FAFA;
+    max-width: fit-content;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+#settings-menu ul li{
+    margin-bottom: 20px;
+}
+
+#settings-menu ul li:hover{
+    background-color: #66666681;
+}

@@ -46,7 +46,8 @@ def home(request):
                 'username': post.post.user.username,
                 'profile_pic': post.post.user.profile_pic.url,
                 'file_url': post.file.url,
-                'instagram_time': post.instagram_time
+                'instagram_time': post.instagram_time,
+                'caption': post.post.caption if post.post.caption else ''
             })
         return JsonResponse({
             'posts': posts_data,
@@ -57,3 +58,19 @@ def home(request):
     # Return standard HTML for regular page loads
     context = {'page_obj': page_obj, 'user': request.user}
     return render(request, 'home.html', context)
+
+def create_post(request):
+    if request.method == 'POST':
+        caption = request.POST.get('caption')
+        location = request.POST.get('location')
+        images = request.FILES.getlist('images')
+
+        post = Posts.objects.create(user=request.user, caption=caption, location=location)
+        for img in images:
+            PostFiles.objects.create(post=post, file=img)
+
+        return JsonResponse({'status': 'success'})
+    
+def profile(request):
+    posts_count = Posts.objects.filter(user=request.user).count()
+    return render(request, 'profile.html', {'posts_count': posts_count})
