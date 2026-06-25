@@ -49,6 +49,22 @@
     </ul>
 </menu>
 
+
+<div class="tabs">
+    <i class="fa-solid fa-grip"></i>
+    <i class="fa-regular fa-bookmark"></i>
+    <i class="fa-solid fa-retweet"></i>
+    <i class="fa-regular fa-id-badge"></i>
+</div>
+
+<div class="tabs-content" is="posts">
+    {% for post in posts %}
+    <img src="{{post.file.url}}" alt="">
+    {% endfor %}
+</div>
+
+
+
 <script>
     settingsMenu = document.getElementById('settings-menu')
     function showSettings(){

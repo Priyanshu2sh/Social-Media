@@ -72,5 +72,6 @@ def create_post(request):
         return JsonResponse({'status': 'success'})
     
 def profile(request):
+    posts = PostFiles.objects.select_related('post').order_by('-post__created_at')
     posts_count = Posts.objects.filter(user=request.user).count()
-    return render(request, 'profile.html', {'posts_count': posts_count})
+    return render(request, 'profile.html', {'posts':posts, 'posts_count': posts_count})
