@@ -7,7 +7,7 @@
 <div class="profile-container">
 
     <div class="profile-header">
-        <img src="{{user.profile_pic.url}}" alt="" style="width: 10em; height: 10em; border-radius: 50%;"   >
+        <img src="{{user.profile_pic.url}}" alt="" style="width: 10em; height: 10em; border-radius: 50%;">
 
         <div class="profile-info">
             <div class="username-row">
@@ -51,30 +51,135 @@
 
 
 <div class="tabs">
-    <i class="fa-solid fa-grip"></i>
-    <i class="fa-regular fa-bookmark"></i>
-    <i class="fa-solid fa-retweet"></i>
-    <i class="fa-regular fa-id-badge"></i>
+    <i class="fa-solid fa-grip tabs-icons" onclick="myPosts()"></i>
+    <i class="fa-regular fa-bookmark tabs-icons" onclick="saved()"></i>
+    <i class="fa-solid fa-retweet tabs-icons" onclick="rePosts()"></i>
+    <i class="fa-regular fa-id-badge tabs-icons" onclick="taggedPhotos()"></i>
 </div>
 
-<div class="tabs-content" is="posts">
+<div class="tabs-content" id="tabs-content">
     {% for post in posts %}
     <img src="{{post.file.url}}" alt="">
     {% endfor %}
 </div>
 
 
+<input type="hidden" value="{{posts.has_next}}" id="has_next">
+<input type="hidden" value="{{posts.next_page_number}}" id="next_page_num">
 
 <script>
     settingsMenu = document.getElementById('settings-menu')
-    function showSettings(){
-        if (settingsMenu.style.display == 'none'){
+    function showSettings() {
+        if (settingsMenu.style.display == 'none') {
             settingsMenu.style.display = 'block';
         }
-        else{
+        else {
             settingsMenu.style.display = 'none';
         }
     }
+
+    function taggedPhotos() {
+        tabsContent = document.getElementById("tabs-content")
+        tabsContent.style.display = 'flex';
+        tabsContent.style.flexDirection = 'column';
+        tabsContent.style.alignItems = 'center';
+        tabsContent.style.fontSize = 'x-large';
+        tabsContent.style.position = 'relative';
+        tabsContent.style.top = '8em';
+        tabsContent.style.left = '11em';
+        tabsContent.style.width = '980px';
+
+        tabsContent.innerHTML = `
+            <i class="fa-regular fa-id-badge" style="border: 2px solid black; border-radius: 40px; padding: 20px;"></i>
+            <h3>Photos of you</h3>
+            <p>When people tag you in photos, they'll appear here.</p> 
+        `;
+    }
+
+    function rePosts() {
+        tabsContent = document.getElementById("tabs-content")
+        tabsContent.style.display = 'flex';
+        tabsContent.style.flexDirection = 'column';
+        tabsContent.style.alignItems = 'center';
+        tabsContent.style.fontSize = 'x-large';
+        tabsContent.style.position = 'relative';
+        tabsContent.style.top = '8em';
+        tabsContent.style.left = '11em';
+        tabsContent.style.width = '980px';
+
+        tabsContent.innerHTML = `
+            <h3>No reposts</h3>
+            <p>There are no reposts to show.</p> 
+        `;
+    }
+
+    function saved() {
+        tabsContent = document.getElementById("tabs-content")
+        tabsContent.style.display = 'flex';
+        tabsContent.style.flexDirection = 'column';
+        tabsContent.style.alignItems = 'center';
+        tabsContent.style.fontSize = 'x-large';
+        tabsContent.style.position = 'relative';
+        tabsContent.style.top = '8em';
+        tabsContent.style.left = '11em';
+        tabsContent.style.width = '980px';
+
+        tabsContent.innerHTML = `
+            <i class="fa-regular fa-bookmark" style="border: 2px solid black; border-radius: 40px; padding: 20px;"></i>
+            <h3>Save</h3>
+            <p style="width: 20em;">Save photos and videos that you want to see again. No one is notified, and only you can see what you've saved.</p> 
+        `;
+    }
+
+    next = document.getElementById('has_next');
+    next_page_num = document.getElementById('next_page_num');
+
+    async function myPosts(page_num = 1, append = false) {
+
+        const response = await fetch(`http://127.0.0.1:8000/home/profile?page=${page_num}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        const tabsContent = document.getElementById("tabs-content");
+
+        if (!append) {
+            tabsContent.innerHTML = "";
+        }
+
+        tabsContent.style.display = 'grid';
+        tabsContent.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        tabsContent.style.position = 'relative';
+        tabsContent.style.gap = '2px';
+        tabsContent.style.width = '980px';
+
+        data.posts.forEach(post => {
+            tabsContent.innerHTML += `
+            <img style="width: 100%; height: 400px; object-fit: cover; display: block;" src="${post.file_url}" alt="">
+        `;
+        });
+
+        next.value = data.has_next ? "true" : "";
+        next_page_num.value = data.next_page_number || "";
+
+    }
+
+    $(window).scroll(async function () {
+
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            console.log(next.value, next_page_num.value)
+            if (!next.value || !next_page_num.value) {
+                return;
+            }
+
+            await myPosts(next_page_num.value, true);
+        }
+
+    });
 </script>
 
 

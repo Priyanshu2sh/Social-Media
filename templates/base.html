@@ -372,7 +372,7 @@
 
                     <div class="user-info">
                         <img style="height: 30px; width: 30px; border: none; border-radius: 25px;"
-                            src="{{user.profile_pic.url}}" alt="Profile">
+                            src="{% if user.profile_pic %} {{user.profile_pic.url}} {% endif %}" alt="Profile">
                         <strong>{{user.username}}</strong>
                     </div>
 

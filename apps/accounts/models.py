@@ -13,7 +13,7 @@ class User(AbstractUser):
     ]
     email = models.EmailField(unique=True, null=False, blank=False)
     name = models.CharField(max_length=100)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True, blank=True)
     otp = models.CharField(max_length=6, null=True, blank=True)
     otp_expiry = models.DateTimeField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)

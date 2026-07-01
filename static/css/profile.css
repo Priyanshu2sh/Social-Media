@@ -146,6 +146,10 @@
     margin-left: 2em;
 }
 
+.tabs-icons:hover{
+    cursor: pointer;
+}
+
 .tabs-content{
     display: grid;
     grid-template-columns: repeat(3, 1fr);

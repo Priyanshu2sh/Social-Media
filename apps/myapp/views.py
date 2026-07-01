@@ -38,7 +38,6 @@ def home(request):
         else:
             post.instagram_time = f"{seconds // week}w"
 
-    # Check if the request expects JSON (e.g., from fetch)
     if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'json' in request.headers.get('Accept', ''):
         posts_data = []
         for post in page_obj:
@@ -74,4 +73,19 @@ def create_post(request):
 def profile(request):
     posts = PostFiles.objects.select_related('post').order_by('-post__created_at')
     posts_count = Posts.objects.filter(user=request.user).count()
+    paginator = Paginator(posts, 6)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'json' in request.headers.get('Accept', ''):
+        posts_data = []
+        for post in posts:
+            posts_data.append({
+                'file_url': post.file.url,
+            })
+        return JsonResponse({
+            'posts': posts_data,
+            'has_next': posts.has_next(),
+            'next_page_number': posts.next_page_number() if posts.has_next() else None
+        })
     return render(request, 'profile.html', {'posts':posts, 'posts_count': posts_count})

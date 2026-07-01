@@ -50,7 +50,7 @@
 
 <div class="profile-section">
     <div>
-        <img style="height: 30px; width: 30px; border: none; border-radius: 25px;" src="{{user.profile_pic.url}}"
+        <img style="height: 30px; width: 30px; border: none; border-radius: 25px;" src="{% if user.profile_pic %} {{user.profile_pic.url}} {% endif %}"
             alt="Profile">
         <p>{{user.username}}</p>
     </div>
